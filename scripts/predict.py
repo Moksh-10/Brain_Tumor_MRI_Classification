@@ -102,6 +102,11 @@ def predict(image_base64):
 
     # Heatmap overlay base64
     heatmap_image_base64 = create_heatmap_overlay(heatmap, image)
+
+    heatmap, output_raw = gradcam.generate(tensor)
+
+    output_raw = torch.tensor(output_raw)
+    probs = torch.softmax(output_raw, dim=0).numpy()
     
     # Results
     pred_idx = np.argmax(probs)
